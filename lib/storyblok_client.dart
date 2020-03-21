@@ -78,7 +78,11 @@ class StoryblokClient {
     Map<String, String> parameters,
     bool ignoreCacheVersion = false,
   }) async {
-    if (parameters == null) parameters = {'token': _token};
+    if (parameters == null) {
+        parameters = {'token': _token};
+    } else {
+        parameters['token'] = _token;
+    }
 
     if (!ignoreCacheVersion) {
       if (_autoCacheInvalidation) await invalidateCacheVersion();

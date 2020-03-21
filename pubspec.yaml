@@ -1,6 +1,6 @@
 name: storyblok_client
 description: Client for accessing the Storyblok Headless CMS API through Dart.
-version: 1.0.0+1
+version: 1.0.1
 homepage: https://github.com/essarn/storyblok_client
 repository: https://github.com/essarn/storyblok_client
 issue_tracker: https://github.com/essarn/storyblok_client/issues
