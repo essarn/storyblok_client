@@ -2,10 +2,11 @@ import 'dart:convert';
 
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:http/http.dart' as http;
-import 'package:storyblok_client/filter_query.dart';
-import 'package:storyblok_client/resolve_relations.dart';
-import 'package:storyblok_client/sort_by.dart';
+
 import 'enums.dart';
+import 'filter_query.dart';
+import 'resolve_relations.dart';
+import 'sort_by.dart';
 
 class StoryblokClient {
   static const _base = 'api.storyblok.com';
@@ -36,6 +37,7 @@ class StoryblokClient {
 
       if (_cacheVersion == null) {
         print(
+            // ignore: lines_longer_than_80_chars
             'No cache invalidation version fetched. Consider turning on auto cache invalidation');
       } else {
         parameters['cv'] = _cacheVersion;
@@ -54,6 +56,7 @@ class StoryblokClient {
   Future<void> invalidateCacheVersion() async {
     if (_autoCacheInvalidation) {
       print(
+          // ignore: lines_longer_than_80_chars
           "Automatic cache invalidation is configured, avoid calling manually.");
     }
 
@@ -80,8 +83,9 @@ class StoryblokClient {
     final parameters = <String, String>{};
     if (uuid != null) parameters['find_by'] = 'uuid';
     if (version != null) parameters['version'] = EnumToString.parse(version);
-    if (resolveLinks != null)
+    if (resolveLinks != null) {
       parameters['resolve_links'] = resolveLinks.toString();
+    }
     if (resolveRelations != null) {
       parameters['resolve_relations'] = resolveRelations.fold<String>(
           '',
@@ -90,8 +94,9 @@ class StoryblokClient {
     }
     if (fromRelease != null) parameters['from_release'] = fromRelease;
     if (language != null) parameters['language'] = language;
-    if (fallbackLanguage != null)
+    if (fallbackLanguage != null) {
       parameters['fallback_language'] = fallbackLanguage;
+    }
 
     return await _get(path.toString(), parameters: parameters);
   }
@@ -135,8 +140,9 @@ class StoryblokClient {
           .reduce((previous, current) => previous += ',$current');
     }
     if (version != null) parameters['version'] = EnumToString.parse(version);
-    if (resolveLinks != null)
+    if (resolveLinks != null) {
       parameters['resolve_links'] = resolveLinks.toString();
+    }
     if (resolveRelations != null) {
       parameters['resolve_relations'] = resolveRelations.fold<String>(
           '',
@@ -155,12 +161,14 @@ class StoryblokClient {
     }
     if (searchTerm != null) parameters['search_term'] = searchTerm;
     if (filterQueries != null) {
-      filterQueries.forEach((filter) =>
-          parameters['filter_query[${filter.attribute}][${filter.operation}]'] =
-              filter.value.toString());
+      for (final filter in filterQueries) {
+        parameters['filter_query[${filter.attribute}][${filter.operation}]'] =
+            filter.value.toString();
+      }
     }
-    if (isStartPage != null)
+    if (isStartPage != null) {
       parameters['is_startpage'] = isStartPage ? '1' : '0';
+    }
     if (page != null) parameters['page'] = page.toString();
     if (perPage != null) parameters['per_page'] = perPage.toString();
 

@@ -1,4 +1,4 @@
-import 'package:storyblok_client/enums.dart';
+import 'enums.dart';
 
 class SortBy {
   final String attributeField;
