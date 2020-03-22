@@ -13,7 +13,7 @@ When `autoCacheInvalidation` is set to `false` will the cache version not be aut
 Fetching an example story in the `posts` folder named `one`.
 The returned object is the original Storyblok response body.
 
-```
+```dart
 import 'package:storyblok_client/storyblok_client.dart';
 
 void main() async {
@@ -28,7 +28,7 @@ void main() async {
 
 Fetching multiple stories in the `posts` folder.
 
-```
+```dart
 import 'package:storyblok_client/storyblok_client.dart';
 
 void main() async {

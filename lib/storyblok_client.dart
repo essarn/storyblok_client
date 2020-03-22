@@ -3,10 +3,76 @@ import 'dart:convert';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:http/http.dart' as http;
 
-import 'enums.dart';
-import 'filter_query.dart';
-import 'resolve_relations.dart';
-import 'sort_by.dart';
+enum StoryVersion {
+  published,
+  draft,
+}
+
+class ResolveRelations {
+  final String componentName;
+  final String fieldName;
+
+  ResolveRelations({this.componentName, this.fieldName});
+}
+
+class SortBy {
+  final String attributeField;
+  final String contentField;
+  final SortOrder order;
+  final SortType type;
+
+  SortBy({this.attributeField, this.contentField, this.order, this.type})
+      : assert(attributeField != null ? contentField == null : true),
+        assert(contentField != null ? attributeField == null : true);
+}
+
+enum SortOrder {
+  asc,
+  desc,
+}
+
+enum SortType {
+  string,
+  int,
+  float,
+}
+
+class FilterQuery {
+  final String attribute;
+  final String operation;
+  final dynamic value;
+
+  FilterQuery(this.attribute, this.operation, this.value);
+
+  FilterQuery.contains({this.attribute, this.value}) : operation = 'in';
+
+  FilterQuery.notIn({this.attribute, this.value}) : operation = 'not_in';
+
+  FilterQuery.allInArray({this.attribute, List<String> value})
+      : operation = 'all_in_array',
+        value = value.reduce((previous, current) => ',$current');
+
+  FilterQuery.inArray({this.attribute, List<String> value})
+      : operation = 'in_array',
+        value = value.reduce((previous, current) => ',$current');
+
+  FilterQuery.greaterThanDate({this.attribute, this.value})
+      : operation = 'gt-date';
+
+  FilterQuery.lessThanDate({this.attribute, this.value})
+      : operation = 'lt-date';
+
+  FilterQuery.greaterThanInt({this.attribute, this.value})
+      : operation = 'gt-int';
+
+  FilterQuery.lessThanInt({this.attribute, this.value}) : operation = 'lt-int';
+
+  FilterQuery.greaterThanFloat({this.attribute, this.value})
+      : operation = 'gt-float';
+
+  FilterQuery.lessThanFloat({this.attribute, this.value})
+      : operation = 'lt-float';
+}
 
 class StoryblokClient {
   static const _base = 'api.storyblok.com';
@@ -33,7 +99,9 @@ class StoryblokClient {
     }
 
     if (!ignoreCacheVersion) {
-      if (_autoCacheInvalidation) await invalidateCacheVersion();
+      if (_autoCacheInvalidation) {
+        await invalidateCacheVersion(showWarning: false);
+      }
 
       if (_cacheVersion == null) {
         print(
@@ -53,8 +121,8 @@ class StoryblokClient {
     return json.decode(response.body);
   }
 
-  Future<void> invalidateCacheVersion() async {
-    if (_autoCacheInvalidation) {
+  Future<void> invalidateCacheVersion({bool showWarning = true}) async {
+    if (_autoCacheInvalidation && showWarning) {
       print(
           // ignore: lines_longer_than_80_chars
           "Automatic cache invalidation is configured, avoid calling manually.");
