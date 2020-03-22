@@ -122,11 +122,6 @@ class StoryblokClient {
     String language,
     String fallbackLanguage,
   }) async {
-    assert(fullSlug != null && id != null && uuid != null);
-    assert(fullSlug != null || (id == null && uuid == null));
-    assert(id != null || (fullSlug == null && uuid == null));
-    assert(uuid != null || (fullSlug == null && id == null));
-
     final path = StringBuffer('stories/');
     if (fullSlug != null) path.write(fullSlug);
     if (id != null) path.write(id);
