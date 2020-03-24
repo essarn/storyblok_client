@@ -3,8 +3,13 @@ import 'dart:convert';
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:http/http.dart' as http;
 
+/// This enumeration is responsible for the current state the story is in.
+/// The StoryVersion is not related to the Workflow stage
 enum StoryVersion {
+  /// The story is published and can be accessed with the public API Key
   published,
+
+  /// The story is in draft and can be accessed with the preview API Key
   draft,
 }
 
@@ -26,8 +31,12 @@ class SortBy {
         assert(contentField != null ? attributeField == null : true);
 }
 
+/// Describes how to order rows
 enum SortOrder {
+  /// Ascending ordering mode (lowest items first)
   asc,
+
+  /// Descending ordering mode (highest items first)
   desc,
 }
 
