@@ -1,5 +1,9 @@
+## 1.0.1+1
+- Change internal structure of pacakge
+
 ## 1.0.1
-- Add documentation and improve response data.
+- Add documentation for all public members
+- Improve response with parsed data
 
 ## 1.0.0+3
 
