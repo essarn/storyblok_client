@@ -1,17 +1,18 @@
 # Storyblok Client
 
+![Pub Version](https://img.shields.io/pub/v/storyblok_client?style=flat-square)
+
 Client for accessing the Storyblok Headless CMS API through Dart.
 
 ## Request response
 
-`StoryblokResponse` is returned when fetching stories. The object contains the original http response and the parsed stories. `StoryblokResponse.stories` are the parsed `Story` objects from Storyblok. 
+`StoryblokResponse` is returned when fetching stories. The object contains the original http response and the parsed stories. `StoryblokResponse.stories` are the parsed `Story` objects from Storyblok.
 
 ## Story
 
 The `Story` object contains the same properties as the original Storyblok response. Use `Story.content` to access the story content.
 
-See https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/the-story-object for more information.
-
+See <https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/the-story-object> for more information.
 
 ## Retrieve one story
 
@@ -91,5 +92,3 @@ Stories can be ordered by supplying an `OrderBy` object to the `orderBy` paramet
 The cache version can either be manually invalidated or automaticity invalided before each request. Control this behavios using the `autoCacheInvalidation` parameter.
 
 When `autoCacheInvalidation` is set to `false` will the cache version not be auto invalidated before each request. To invalidate the cache version manually at appropriate stages in the project, use the `invalidateCacheVersion()` method.
-
-
